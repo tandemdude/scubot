@@ -24,7 +24,7 @@ class Roles(BotModule):
             role = [i for i, x in enumerate(server_roles_str) if x == msg[1]]  # Check where in the list the role is
             if len(role) == 0:
                 msg = "[!] Role not found."
-                await client.send_message(message.channel, msg)
+                await message.channel.send(msg)
             role_to_assign = message.server.roles[role[0]]
             try:
                 if role_to_assign in message.author.roles:
@@ -35,6 +35,6 @@ class Roles(BotModule):
                     msg = "[:ok_hand:] Added you to " + role_to_assign.name + " ."
             except discord.DiscordException:
                 msg = "[!] Could not assign you that role."
-            await client.send_message(message.channel, msg)
+            await message.channel.send(msg)
         else:
             pass

@@ -19,7 +19,7 @@ bot_version = '1.0.0'
 BotModule.loaded_modules = [Units(), Roles(), Help(), Status(bot_version), RedditPost(), Karma(), Info(), Deco()]
 
 
-@client.event
+@client.async_event
 async def on_message(message):
     if message.author == client.user:
         return
@@ -28,7 +28,7 @@ async def on_message(message):
             await bot_module.parse_command(message, client)
 
 
-@client.event
+@client.async_event
 async def on_reaction_add(reaction, user):
     if reaction.message.author == client.user:
         return
@@ -37,7 +37,7 @@ async def on_reaction_add(reaction, user):
             await bot_module.on_reaction_add(reaction, client, user)
 
 
-@client.event
+@client.async_event
 async def on_reaction_remove(reaction, user):
     if reaction.message.author == client.user:
         return
@@ -46,7 +46,7 @@ async def on_reaction_remove(reaction, user):
             await bot_module.on_reaction_remove(reaction, client, user)
 
 
-@client.event
+@client.async_event
 async def on_ready():
     print('Login success. Your details:')
     print('User:', client.user.name)

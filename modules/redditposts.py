@@ -38,7 +38,7 @@ class RedditPost(BotModule):
         self.lastPostId = data[0]['data']['id']
 
     async def parse_command(self, message, client):
-        await client.send_message(message.channel, self.help_text + '. ' + self.description)
+        await message.channel.send(self.help_text + '. ' + self.description)
 
     def get(self, sub):
         # An loop here is needed because for some reason html.json()["data]["children"] fails for no reason sporadically
@@ -120,9 +120,9 @@ class RedditPost(BotModule):
                     embeds.append(self.construct_embed(post_data, client))
                 embeds.reverse()
                 for embed in embeds:
-                    await client.send_message(channel, embed=embed)
+                    await channel.send_message(embed=embed)
                 self.lastPostId = data[0]['data']['id']
                 await asyncio.sleep(60)
             except Exception as e:
-                await client.send_message(channel, "An error occured in redditpost, hopefully it is handled well and it"
-                                                   " doesn't break. \n\n Here is the exception for the devs:" + str(e))
+                await channel.send("An error occured in redditpost, hopefully it is handled well and it"
+                                   " doesn't break. \n\n Here is the exception for the devs:" + str(e))

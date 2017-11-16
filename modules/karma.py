@@ -25,7 +25,7 @@ class Karma(BotModule):
                 if msg[1] == 'reset':
                     self.module_db.update({'karma': 0}, target_user.userid == message.author.id)
                     msg = "[:ok_hand:] Your karma has been reset to 0."
-                    await client.send_message(message.channel, msg)
+                    await message.channel.send(msg)
                 else:
                     pass
             else:
@@ -33,7 +33,7 @@ class Karma(BotModule):
                     self.module_db.insert({'userid': message.author.id, 'karma': 0})
                 user_karma = self.module_db.get(target_user.userid == message.author.id)['karma']
                 msg = message.author.name + "'s karma: " + str(user_karma)
-                await client.send_message(message.channel, msg)
+                await message.channel.send(msg)
 
         async def on_reaction_add(self, reaction, client, user):
             emoji_text = reaction.emoji

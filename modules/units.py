@@ -49,7 +49,8 @@ class Units(BotModule):
         if 'all' in message.content:  # convert all recent messages rather than just the first one
             bulk = True
         if message.content.lower() == self.trigger_char + self.trigger_string or message.content == self.trigger_char + self.trigger_string + ' all':
-            async for msg in client.logs_from(channel, limit=self.historyLimit):
+            messages_list = await channel.history().flatten()
+            for msg in messages_list:
                 for unit in self.AvailableUnits:
                     if msg.author != client.user:  # don't convert yourself
                         send_message = self.parse_units(msg, unit)
@@ -58,7 +59,7 @@ class Units(BotModule):
                             messages = send_message.split(',')  # send different conversions as different messages
 
                             for send in messages:
-                                await client.send_message(message.channel, send)
+                                await message.channel.send(send)
                             if not bulk:
                                 return  # break after 1 message unless bulk
 
@@ -68,7 +69,7 @@ class Units(BotModule):
                 if send_message != '':  # returns empty when no match found (can't send empty message)
                     messages = send_message.split(',')  # send different conversions as different messages
                     for send in messages:
-                        await client.send_message(message.channel, send)
+                        await message.channel.send(send)
 
     def parse_units(self, message, unit):
         if re.search('([0-9]|\.)+(| )(?!' + unit.excludes + ')(' + unit.prefix + '|' + unit.name + ')',

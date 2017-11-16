@@ -39,6 +39,6 @@ class Help(BotModule):
 
     async def send_message(self, client, message, send):
         if self.direct_mode:
-            await client.send_message(message.author, send)
+            await message.author.send(send)
         else:
-            await client.send_message(message.channel, send)
+            await message.channel.send(send)

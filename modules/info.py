@@ -36,4 +36,4 @@ class Info(BotModule):
         if self.direct_mode:
             await client.send_message(message.author, send)
         else:
-            await client.send_message(message.channel, send)
+            await message.channel.send(send)
