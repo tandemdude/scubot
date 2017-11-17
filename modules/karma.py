@@ -8,7 +8,8 @@ class Karma(BotModule):
 
         description = 'Monitors messages for reactions and adds karma accordingly.'
 
-        help_text = 'This module has no callable functions'
+        help_text = 'karma is added by reacting to others posts with a specific react, :star: by default, ' \
+                    'your karma can be checked with `!karma` and reset with `!karma reset`'
 
         trigger_string = 'karma'
 
