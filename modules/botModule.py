@@ -1,5 +1,5 @@
 from tinydb import TinyDB, Query
-
+import re
 
 class BotModule:
     name = ''  # name of your module
@@ -26,6 +26,21 @@ class BotModule:
 
     def __init__(self):
         self.module_db = TinyDB('./modules/databases/' + self.name)
+
+    @staticmethod
+    async def parse_subcommand(message_content):
+        SUBCOMMAND = ''  # This regex should match every subcommand.
+        PARAMETERS = ''  # This regex should capture a parameter only.
+        param_dict = {}
+        subcommand_list = []
+        # Iterable of every subcommand
+        for match in re.finditer(SUBCOMMAND, message_content):
+            parameter_match = re.match(PARAMETERS, match[0])
+            if parameter_match:
+                param_dict[parameter_match[0]] = parameter_match[1]
+            else:
+                subcommand_list.append(match[0])
+        return subcommand_list, param_dict
 
     async def parse_command(self, message, client):
         raise NotImplementedError("Parse function not implemented in module:" + self.name)
