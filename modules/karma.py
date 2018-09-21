@@ -44,7 +44,7 @@ class Karma(BotModule):
                 return False
 
         async def parse_command(self, message, client):
-            msg = self.parse_subcommand(message.content)
+            msg = await self.parse_subcommand(message.content)
             target_user = Query()
             # if len(msg) > 1:
             if msg[0]:

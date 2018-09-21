@@ -18,7 +18,7 @@ class Help(BotModule):
     direct_mode = True  # Send messages via DM instead of in the channel
 
     async def parse_command(self, message, client):
-        msg = self.parse_subcommand(message.content)
+        msg = await self.parse_subcommand(message.content)
         if not msg[0]:
             await self.send_message(client, message, "Help: \n\n" + self.help_text)
         else:

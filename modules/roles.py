@@ -19,7 +19,7 @@ class Roles(BotModule):
     async def parse_command(self, message, client):
         server_roles = message.server.roles  # Grab a list of all roles as Role objects
         server_roles_str = [x.name for x in server_roles]  # String-ify it into their names
-        msg = self.parse_subcommand(message.content)
+        msg = await self.parse_subcommand(message.content)
         if msg[0]:
             role = [i for i, x in enumerate(server_roles_str) if x == msg[0][1]]  # Check where in the list the role is
             if len(role) == 0:

@@ -28,7 +28,7 @@ class BotModule:
         self.module_db = TinyDB('./modules/databases/' + self.name)
 
     @staticmethod
-    def parse_subcommand(message_content):
+    async def parse_subcommand(message_content):
         message_content = shlex.split(message_content)
         message_content.pop(0)
         subcommands = []
