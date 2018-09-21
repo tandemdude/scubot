@@ -1,5 +1,5 @@
 from tinydb import TinyDB, Query
-import re
+import shlex
 
 class BotModule:
     name = ''  # name of your module
@@ -29,18 +29,16 @@ class BotModule:
 
     @staticmethod
     async def parse_subcommand(message_content):
-        SUBCOMMAND = ''  # This regex should match every subcommand.
-        PARAMETERS = ''  # This regex should capture a parameter only.
-        param_dict = {}
-        subcommand_list = []
-        # Iterable of every subcommand
-        for match in re.finditer(SUBCOMMAND, message_content):
-            parameter_match = re.match(PARAMETERS, match[0])
-            if parameter_match:
-                param_dict[parameter_match[0]] = parameter_match[1]
-            else:
-                subcommand_list.append(match[0])
-        return subcommand_list, param_dict
+        message_content = shlex.split(message_content)
+        subcommands = []
+        parameters = {}
+        for t in message_content:
+            s = t.split("=", 1)
+            if s[0] == t:  # Then this must be a subcommand.
+                subcommands.append(t)
+            else:  # Else, it is a parameter.
+                parameters[s[0]] = s[1]
+        return subcommands, parameters
 
     async def parse_command(self, message, client):
         raise NotImplementedError("Parse function not implemented in module:" + self.name)
