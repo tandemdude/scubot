@@ -24,7 +24,8 @@ class Status(BotModule):
         BotModule.__init__(self)
         self.bot_version = bot_version
 
-    def uptime_convert(self, seconds):
+    @staticmethod
+    def uptime_convert(seconds):
         minutes, seconds = divmod(seconds, 60)
         hours, minutes = divmod(minutes, 60)
         days, hours = divmod(hours, 24)

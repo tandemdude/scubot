@@ -18,11 +18,11 @@ class Info(BotModule):
     direct_mode = True  # Send messages via DM instead of in the channel
 
     async def parse_command(self, message, client):
-        msg = shlex.split(message.content)
-        if len(msg) == 1:
+        msg = self.parse_subcommand(message.content)
+        if not msg[0]:
             await self.send_message(client, message, self.help_text)
         else:
-            module_name = msg[1].lower()
+            module_name = msg[0][1].lower()
             for botModule in self.loaded_modules:
                 if botModule.name == module_name:
                     if botModule.description == '':

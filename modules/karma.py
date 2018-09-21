@@ -44,14 +44,15 @@ class Karma(BotModule):
                 return False
 
         async def parse_command(self, message, client):
-            msg = shlex.split(message.content)
+            msg = self.parse_subcommand(message.content)
             target_user = Query()
-            if len(msg) > 1:
-                if msg[1] == 'reset':
+            # if len(msg) > 1:
+            if msg[0]:
+                if msg[0][1] == 'reset':
                     self.module_db.update({'karma': 0}, target_user.userid == message.author.id)
                     msg = "[:ok_hand:] Your karma has been reset to 0."
                     await client.send_message(message.channel, msg)
-                elif msg[1] == 'rank':
+                elif msg[0][1] == 'rank':
                     pos = 1
                     text = ''
                     ranked = sorted(self.module_db.all(), key=lambda k: k['karma'])[::-1]
