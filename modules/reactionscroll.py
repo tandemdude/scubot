@@ -1,7 +1,4 @@
 import discord
-from tinydb import TinyDB, Query
-import shlex
-import time
 import math
 
 class Scrollable():
