@@ -1,7 +1,5 @@
 import time
-
 from discord.ext import commands
-import discord
 from discord.utils import find
 from tinydb import *
 import modules.reactionscroll as rs
